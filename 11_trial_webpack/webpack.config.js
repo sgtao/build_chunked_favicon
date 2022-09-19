@@ -16,7 +16,7 @@ module.exports = {
   // entry: ['./src/app.js', './src/sub.js']
   entry: {app: './src/app.js'},
   output: {
-    path: path.resolve(__dirname, 'public'),
+    path: path.resolve(__dirname, 'docs'),
     filename: '[name].bundle.js'
   },
   module: {
