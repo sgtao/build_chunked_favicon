@@ -16,26 +16,9 @@
 
 ## １．webpackでの試行
 - 当初、`file-loader`の対象に`ico`ファイルをつければよいと思ったが、上手くいかない。
-- `copy-webpack-plugin`を使った方法を試してみる
-  * QAサイト"[How do I get favicon working with webpack](https://discourse.aurelia.io/t/how-do-i-get-favicon-working-with-webpack/3600)"で紹介されていた方法を試してみる
-    + 参考webpack: https://webpack.js.org/plugins/copy-webpack-plugin/
-  * ⇒失敗。上手く実装できなかった。（`HookWebpackError: Invalid host defined options`）
-```js
-  const CopyWebpackPlugin = require('copy-webpack-plugin')
-...
-  plugins: [
-...
-    new CopyWebpackPlugin ({
-      patterns: [
-        {
-          context: "src",
-          from: "images/favicon.ico",
-          to: path.resolve(__dirname, "./docs/images/")
-        }
-      ],
-    }),
-```
--  refer (https://github.com/jantimon/favicons-webpack-plugin)
+  * `copy-webpack-plugin`を使った方法で失敗。上手く実装できなかった。（`HookWebpackError: Invalid host defined options`）
+- 次に、`favicons-webpack-plugin`を使う方法で試行
+  *  refer (https://github.com/jantimon/favicons-webpack-plugin)
   * ファイルコピーはできたが、コピー先のファイル名にhashの指定がないようだ
   * ⇒　faviconの生成先に`[contenthash]`で指定する
 ```js
@@ -51,3 +34,5 @@
 ```
 - `html-webpack-plugin`のオプションにfaviconの指定方法も書いていた
   * refer HtmlWebpackPlugin：[Option](https://github.com/jantimon/html-webpack-plugin#options)
+  * 中身は、`favicons-webpack-plugin`を利用しているようだ
+
