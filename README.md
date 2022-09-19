@@ -16,7 +16,10 @@
 
 ## １．webpackでの試行
 - 当初、`file-loader`の対象に`ico`ファイルをつければよいと思ったが、上手くいかない。
-  * `copy-webpack-plugin`を使った方法で失敗。上手く実装できなかった。（`HookWebpackError: Invalid host defined options`）
+  * `file-loader`の拡張子に"ico"を追加しても反応しない。
+  * 画像ファイルではないからか？
+  * 明示的にファイル複製にしようと、`copy-webpack-plugin`を使ってみたが、失敗
+    + （スキル不足で）上手く実装できなかった。（`HookWebpackError: Invalid host defined options`）
 - 次に、`favicons-webpack-plugin`を使う方法で試行
   *  refer (https://github.com/jantimon/favicons-webpack-plugin)
   * ファイルコピーはできたが、コピー先のファイル名にhashの指定がないようだ
