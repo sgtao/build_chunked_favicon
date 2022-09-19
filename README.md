@@ -44,4 +44,35 @@
 - `vue create`で作ったアプリで確認してみる
   * Vue3の標準設定のアプリとする。
   * Vue/CLI v5を利用することで、`vue.config.js`を作成する
+- 手順１．まず、`favicons-webpack-plugin`をインストール
+```shell
+npm i favicons-webpack-plugin --save-dev
+```
+- 手順２．`vue.config.js`ファイルを編集
+```js
+ const { defineConfig } = require('@vue/cli-service')
++const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
+ module.exports = defineConfig({
+   transpileDependencies: true,
+   outputDir: 'docs/',
++  configureWebpack: {
++    plugins: [
++      new FaviconsWebpackPlugin({
++        logo: './public/favicon.ico', // source logo (required)
++        prefix: '[contenthash]/', // Prefix path for generated assets
++      }),
++    ],
++  },
+ })
+ ```
+- 手順３．`vue inspect`で確認：失敗？
+  * `FaviconWebpackPlugin`が現れない。手順２が誤り？
+- 手順４．`npm run build`してみる：TypeError（faviconの設定が邪魔をしていた）
+```
+?  Building for production...
+    const { html: tags, images, files } = await favicons(logoSource, {
+                                                ^
+TypeError: favicons is not a function
+```
+- 追記分の設定を外してビルド
 
