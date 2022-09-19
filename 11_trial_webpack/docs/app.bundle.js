@@ -16,7 +16,7 @@
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _sub__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sub */ \"./src/sub.js\");\n/* harmony import */ var _sub__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_sub__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _app_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./app.scss */ \"./src/app.scss\");\n// import sub from './sub' // sub.js をインポートする(.jsは省略可能)\n // sub.js をインポート(更に省略するケース)\n\n\n\nvar init = function init() {\n  console.log('this is a main js');\n};\n\ninit();\n\n//# sourceURL=webpack://webpack_tutorial/./src/app.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _sub__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sub */ \"./src/sub.js\");\n/* harmony import */ var _sub__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_sub__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _app_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./app.scss */ \"./src/app.scss\");\n// import sub from './sub' // sub.js をインポートする(.jsは省略可能)\n // sub.js をインポート(更に省略するケース)\n\n\n\nconst init = () => {\n  console.log('this is a main js');\n};\n\ninit();\n\n//# sourceURL=webpack://webpack_tutorial/./src/app.js?");
 
 /***/ }),
 
