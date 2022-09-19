@@ -71,6 +71,9 @@ module.exports = {
       template: "./src/index.html",
       inject: "body",
     }),
-    new FaviconsWebpackPlugin('./src/images/favicon.ico'), // svg works too!
+    new FaviconsWebpackPlugin({
+      logo: './src/images/favicon.ico', // source logo (required)
+      prefix: '[contenthash]/', // Prefix path for generated assets
+    }), // svg works too!
   ],
 };

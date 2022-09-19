@@ -35,13 +35,19 @@
       ],
     }),
 ```
-- `html-webpack-plugin`のオプションにfaviconの指定方法も書いていた
-  * refer HtmlWebpackPlugin：[Option](https://github.com/jantimon/html-webpack-plugin#options)
-  * refer (https://github.com/jantimon/favicons-webpack-plugin)
+-  refer (https://github.com/jantimon/favicons-webpack-plugin)
+  * ファイルコピーはできたが、コピー先のファイル名にhashの指定がないようだ
+  * ⇒　faviconの生成先に`[contenthash]`で指定する
 ```js
   const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 ...
   plugins: [
-    new FaviconsWebpackPlugin('/path/to/logo.png') // svg works too!
+...
+    new FaviconsWebpackPlugin({
+      logo: './src/images/favicon.ico', // source logo (required)
+      prefix: '[contenthash]/', // Prefix path for generated assets
+    }), // svg works too!
   ]
 ```
+- `html-webpack-plugin`のオプションにfaviconの指定方法も書いていた
+  * refer HtmlWebpackPlugin：[Option](https://github.com/jantimon/html-webpack-plugin#options)
