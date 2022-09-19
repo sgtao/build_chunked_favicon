@@ -74,5 +74,30 @@ npm i favicons-webpack-plugin --save-dev
                                                 ^
 TypeError: favicons is not a function
 ```
-- 追記分の設定を外してビルド
+- 追記分の設定を外してビルド：成功
 
+### 代替案：Vueですでに使っているPlug-Inないで設定追加
+- `vue inpspect`を見ると、**CopyPlugin**をすでに利用しているようなので、ここに設定を追加する案
+```js
+    new CopyPlugin(
+      {
+        patterns: [
+          {
+            from: '.../13_trial_vue_create/public',
+            to: '.../13_trial_vue_create/docs',
+            toType: 'dir',
+            noErrorOnMissing: true,
+            globOptions: {
+              ignore: [
+                '**/.DS_Store',
+                '.../13_trial_vue_create/public/index.html'
+              ]
+            },
+            info: {
+              minimized: true
+            }
+          }
+        ]
+      }
+    ),
+```
