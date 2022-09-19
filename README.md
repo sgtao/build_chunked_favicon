@@ -3,7 +3,7 @@
   * webpackでの試行
   * create-react-appでの試行
   * vue-cli create での試行
-  * create-vue-app での試行　　などを試してみる
+  * create-vue での試行　　などを試してみる
 
 ## 背景
 - ネット記事で、webpackの画像ファイルのchunk付与はとりあげてるけど、`favicon.ico`ファイルをchunkする記事は見かけていない
@@ -38,4 +38,10 @@
 - `html-webpack-plugin`のオプションにfaviconの指定方法も書いていた
   * refer HtmlWebpackPlugin：[Option](https://github.com/jantimon/html-webpack-plugin#options)
   * 中身は、`favicons-webpack-plugin`を利用しているようだ
+
+
+## ３．vue-cli createでの試行
+- `vue create`で作ったアプリで確認してみる
+  * Vue3の標準設定のアプリとする。
+  * Vue/CLI v5を利用することで、`vue.config.js`を作成する
 
