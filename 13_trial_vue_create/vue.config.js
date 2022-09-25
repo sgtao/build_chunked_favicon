@@ -7,26 +7,14 @@ module.exports = defineConfig({
   configureWebpack: {
     plugins: [
       /* config.plugin('copy') */
-      new CopyPlugin(
-        {
-          patterns: [
-            {
-              from: 'public/favicon.ico',
-              to: 'favicon[hash].ico',
-              toType: 'file',
-              noErrorOnMissing: true,
-              globOptions: {
-                ignore: [
-                  '**/.DS_Store',
-                ]
-              },
-              info: {
-                minimized: true
-              }
-            }
-          ]
-        }
-      ),
-    ]
-  },
+      new CopyPlugin({
+        patterns: [
+          {
+            from: 'public/favicon.ico',
+            to: '[name].[contenthash][ext]',
+          },
+        ],
+      }),
+    ],
+  },    
 })
