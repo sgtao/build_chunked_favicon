@@ -8,10 +8,15 @@ const path = require("path"); // output で相対パスにするために読込
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
+const CopyPlugin = require('copy-webpack-plugin');
+//
+// prepare short-hash as function
+// 一番上の行あたりに記述
+const shorthash = Math.random().toString(36).slice(-5);
 //
 module.exports = {
   // プロパティを定義する
-  mode: "development",
+  mode: "production",
   // devtool: 'none', // これは使えないようだ
   // devtool: 'inline-source-map', // distが暗号化される
   // entry: ['./src/app.js', './src/sub.js']
@@ -70,10 +75,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: "./src/index.html",
       inject: "body",
+      favicon: 'src/images/favicon.ico', // faviconはwebpackで指定する(ソースは削除)
+      hash: true, // This is useful for cache busting
     }),
-    new FaviconsWebpackPlugin({
-      logo: './src/images/favicon.ico', // source logo (required)
-      prefix: '[contenthash]/', // Prefix path for generated assets
-    }), // svg works too!
   ],
 };
