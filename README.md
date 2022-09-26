@@ -33,11 +33,22 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: "./src/index.html",
       inject: "body",
-      favicon: 'src/images/favicon.ico', // faviconはwebpackで指定する(ソースは削除)
+      favicon: 'src/images/favicon.ico', // faviconはwebpackで指定する(ソースは削除)※
       hash: true, // This is useful for cache busting
     }),
   ],
 };
+```
+  * webpackでfaviconを指定するので、src(`src/index.html`)側ではfaviconの指定を外す
+```html
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>trial webpack</title>
+  <!-- <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon"> -->
+</head>
 ```
 
 ## ２．create-react-appでの試行
