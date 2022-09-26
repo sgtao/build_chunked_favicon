@@ -20,24 +20,30 @@
   * 画像ファイルではないからか？
   * 明示的にファイル複製にしようと、`copy-webpack-plugin`を使ってみたが、失敗
     + （スキル不足で）上手く実装できなかった。（`HookWebpackError: Invalid host defined options`）
-- 次に、`favicons-webpack-plugin`を使う方法で試行
-  *  refer (https://github.com/jantimon/favicons-webpack-plugin)
-  * ファイルコピーはできたが、コピー先のファイル名にhashの指定がないようだ
-  * ⇒　faviconの生成先に`[contenthash]`で指定する
+- `html-webpack-plugin`を使い、オプションの`favicon`と`hash`を利用するのが手軽だった
 ```js
-  const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
-...
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+//
+module.exports = {
+  // プロパティを定義する
+  mode: "production",
+....
   plugins: [
-...
-    new FaviconsWebpackPlugin({
-      logo: './src/images/favicon.ico', // source logo (required)
-      prefix: '[contenthash]/', // Prefix path for generated assets
-    }), // svg works too!
-  ]
+....
+    new HtmlWebpackPlugin({
+      template: "./src/index.html",
+      inject: "body",
+      favicon: 'src/images/favicon.ico', // faviconはwebpackで指定する(ソースは削除)
+      hash: true, // This is useful for cache busting
+    }),
+  ],
+};
 ```
-- `html-webpack-plugin`のオプションにfaviconの指定方法も書いていた
-  * refer HtmlWebpackPlugin：[Option](https://github.com/jantimon/html-webpack-plugin#options)
-  * 中身は、`favicons-webpack-plugin`を利用しているようだ
+
+## ２．create-react-appでの試行
+- `create-react-app`コマンドでReact開発環境を作成した場合、webpackの環境設定ファイルは表にはみえなかった
+  * webpackでビルドするため、追加でwebpack-cliを追加して、package.jsonを書き換える方法を参考にする
+  * 参考サイト：https://ics.media/entry/16329/#webpack-ts-react
 
 
 ## ３．vue-cli createでの試行
