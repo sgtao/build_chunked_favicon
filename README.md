@@ -54,8 +54,14 @@ module.exports = {
 ## ２．create-react-appでの試行
 - `create-react-app`コマンドでReact開発環境を作成した場合、webpackの環境設定ファイルは表にはみえなかった
   * webpackでビルドするため、追加でwebpack-cliを追加して、package.jsonを書き換える方法を参考にする
-  * 参考サイト：https://ics.media/entry/16329/#webpack-ts-react
+  * refer ICS-mediaサイト：https://ics.media/entry/16329/#webpack-ts-react
+  * refer Zennブログ：https://zenn.dev/hrkmtsmt/articles/93653309e2a13d
 
+### 手順：
+1. `webpack`パッケージを追加：
+```shell
+npm i -D webpack webpack-cli
+```
 
 ## ３．vue-cli createでの試行
 - `vue create`で作ったアプリで確認してみる
