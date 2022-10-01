@@ -61,6 +61,8 @@ module.exports = {
 1. `webpack`パッケージを追加：
 ```shell
 npm i -D webpack webpack-cli
+npm i -D copy-webpack-plugin
+npm i -D favicons-webpack-plugin
 ```
 
 ## ３．vue-cli createでの試行
