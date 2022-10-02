@@ -1,8 +1,10 @@
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+//
 module.exports = {
   // モード値を production に設定すると最適化された状態で、
   // development に設定するとソースマップ有効でJSファイルが出力される
   mode: "production",
-
+  //
   // メインとなるJavaScriptファイル（エントリーポイント）
   entry: "./src/main.tsx",
   // ファイルの出力設定
@@ -20,12 +22,25 @@ module.exports = {
         // TypeScript をコンパイルする
         use: "ts-loader",
       },
+      {
+        test: /\.html$/,
+        use: ["html-loader"],
+      },
     ],
   },
   // import 文で .ts や .tsx ファイルを解決するため
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".json"],
   },
+  // pluginの設定
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: "./src/index.html",
+      inject: "body",
+      // favicon: 'src/images/favicon.ico', // faviconはwebpackで指定する(ソースは削除)
+      hash: true, // This is useful for cache busting
+    }),
+  ],
   // ES5(IE11等)向けの指定
   target: ["web", "es5"],
 };
