@@ -2,7 +2,8 @@
   "name": "tutorial-typescript-react",
   "version": "1.0.0",
   "scripts": {
-    "build": "webpack",
+    "cleanup": "npx rimraf ./dist",
+    "build": "npm run cleanup && webpack",
     "watch": "webpack -w"
   },
   "devDependencies": {
@@ -17,7 +18,8 @@
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.4",
     "react": "^18.1.0",
-    "react-dom": "^18.1.0"
+    "react-dom": "^18.1.0",
+    "rimraf": "^3.0.2"
   },
   "private": true
 }

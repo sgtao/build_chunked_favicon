@@ -37,7 +37,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: "./src/index.html",
       inject: "body",
-      // favicon: 'src/images/favicon.ico', // faviconはwebpackで指定する(ソースは削除)
+      favicon: 'src/logo.svg', // faviconはwebpackで指定する(ソースは削除)
       hash: true, // This is useful for cache busting
     }),
   ],
