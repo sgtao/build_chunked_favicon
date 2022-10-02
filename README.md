@@ -58,11 +58,46 @@ module.exports = {
   * refer Zennブログ：https://zenn.dev/hrkmtsmt/articles/93653309e2a13d
 
 ### 手順：
-1. `webpack`パッケージを追加：
+1. ICS-mediaさんのサンプルソースから編集
+2. `webpack`関連のパッケージを追加：
 ```shell
-npm i -D webpack webpack-cli
-npm i -D copy-webpack-plugin
-npm i -D favicons-webpack-plugin
+npm i
+npm i -D html-loader
+npm i -D html-webpack-plugin
+npm i rimraf --save
+```
+3. htmlを`src/index.html`からコピーするようにして、`html-loader`を利用する
+  * 併せて、faviconも指定して、**hash=true**にする
+  * `webpack.config.js`の追記
+```js
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+//
+module.exports = {
+  // モード値を production に設定すると最適化された状態で、
+  // development に設定するとソースマップ有効でJSファイルが出力される
+  mode: "production",
+  //
+...
+  module: {
+    rules: [
+...
+      {
+        test: /\.html$/,
+        use: ["html-loader"],
+      },
+    ],
+  },
+...
+  // pluginの設定
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: "./src/index.html",
+      inject: "body",
+      favicon: 'src/logo.svg', // faviconはwebpackで指定する(ソースは削除)
+      hash: true, // This is useful for cache busting
+    }),
+  ],
+};
 ```
 
 ## ３．vue-cli createでの試行
