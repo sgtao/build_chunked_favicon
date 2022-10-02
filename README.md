@@ -12,6 +12,7 @@
 ### 参考情報
 - Udemy、CodeMafia『【CodeMafia】Webpack環境構築入門』
   * 試行計画：基本は、NPMの`file-loader`モジュールを使って、オプションに`name: '[contenthash].[ext]',` を付与する方法で実装してみる
+- VueCLIの[The internal webpack configのメモ](https://cli.vuejs.org/guide/webpack.html#chaining-advanced)
 
 
 ## １．webpackでの試行
@@ -104,60 +105,63 @@ module.exports = {
 - `vue create`で作ったアプリで確認してみる
   * Vue3の標準設定のアプリとする。
   * Vue/CLI v5を利用することで、`vue.config.js`を作成する
-- 手順１．まず、`favicons-webpack-plugin`をインストール
+1. まず、`vue inspect`でHTML-pluginの状態を確認
 ```shell
-npm i favicons-webpack-plugin --save-dev
+# vue inspect
+# vue inspect --plugin html
+(cd 13_trial_vue_create/; vue inspect --plugin html)
+/* config.plugin('html') */
+new HtmlWebpackPlugin(
+  {
+    title: '13_trial_vue_create',
+    scriptLoading: 'defer',
+    templateParameters: function () { /* omitted long function */ },
+    template: '...'
+  }
+)
 ```
-- 手順２．`vue.config.js`ファイルを編集
+2. `vue.config.js`で[Pluginの設定変更](https://cli.vuejs.org/guide/webpack.html#modifying-options-of-a-plugin)を適用
 ```js
- const { defineConfig } = require('@vue/cli-service')
-+const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
- module.exports = defineConfig({
-   transpileDependencies: true,
-   outputDir: 'docs/',
-+  configureWebpack: {
-+    plugins: [
-+      new FaviconsWebpackPlugin({
-+        logo: './public/favicon.ico', // source logo (required)
-+        prefix: '[contenthash]/', // Prefix path for generated assets
-+      }),
-+    ],
-+  },
- })
+  chainWebpack: (config) => {
+    //* HTMLの設定 *//
+    config
+      .plugin('html')
+      // .use('html-webpack-plugin')
+      .tap(args => {
+        args[0].template = 'public/index.html'
+        args[0].favicon = 'public/favicon.ico'
+        args[0].hash = true
+        return args
+      })
+    },
  ```
-- 手順３．`vue inspect`で確認：失敗？
-  * `FaviconWebpackPlugin`が現れない。手順２が誤り？
-- 手順４．`npm run build`してみる：TypeError（faviconの設定が邪魔をしていた）
+3. `vue inspect`で再確認：成功
+```shell
+ (cd 13_trial_vue_create/; vue inspect --plugin html)
+/* config.plugin('html') */
+new HtmlWebpackPlugin(
+  {
+    title: '13_trial_vue_create',
+    scriptLoading: 'defer',
+    templateParameters: function () { /* omitted long function */ },
+    template: 'public/index.html',
+    favicon: 'public/favicon.ico',
+    hash: true
+  }
+)
+$
 ```
-?  Building for production...
-    const { html: tags, images, files } = await favicons(logoSource, {
-                                                ^
-TypeError: favicons is not a function
+4. `public/index.html`のfavicon.ico参照部分をコメントアウト
+```html
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!-- <link rel="icon" href="<%= BASE_URL %>favicon.ico"> -->
+    <title><%= htmlWebpackPlugin.options.title %></title>
+  </head>
 ```
-- 追記分の設定を外してビルド：成功
+5. `npm run build`実行
 
-### 代替案：Vueですでに使っているPlug-Inないで設定追加
-- `vue inpspect`を見ると、**CopyPlugin**をすでに利用しているようなので、ここに設定を追加する案
-```js
-    new CopyPlugin(
-      {
-        patterns: [
-          {
-            from: '.../13_trial_vue_create/public',
-            to: '.../13_trial_vue_create/docs',
-            toType: 'dir',
-            noErrorOnMissing: true,
-            globOptions: {
-              ignore: [
-                '**/.DS_Store',
-                '.../13_trial_vue_create/public/index.html'
-              ]
-            },
-            info: {
-              minimized: true
-            }
-          }
-        ]
-      }
-    ),
-```

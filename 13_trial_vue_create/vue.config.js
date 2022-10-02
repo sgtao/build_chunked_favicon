@@ -2,6 +2,7 @@ const { defineConfig } = require('@vue/cli-service')
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+// 
 module.exports = defineConfig({
   transpileDependencies: true,
   outputDir: 'docs/',
@@ -14,14 +15,14 @@ module.exports = defineConfig({
     // },
     plugins: [
       /* config.plugin('copy') */
-      new CopyPlugin({
-        patterns: [
-          {
-            from: 'public/favicon.ico',
-            to: '[name].[contenthash][ext]',
-          },
-        ],
-      }),
+      // new CopyPlugin({
+      //   patterns: [
+      //     {
+      //       from: 'public/favicon.ico',
+      //       to: '[name].[contenthash][ext]',
+      //     },
+      //   ],
+      // }),
       /* config.plugin('html') */
       // new HtmlWebpackPlugin({
       //   template: "./public/index.html",
@@ -30,5 +31,17 @@ module.exports = defineConfig({
       //   hash: true, // This is useful for cache busting
       // }),
     ],
-  },    
+  },
+  chainWebpack: (config) => {
+    //* HTMLの設定 *//
+    config
+      .plugin('html')
+      // .use('html-webpack-plugin')
+      .tap(args => {
+        args[0].template = 'public/index.html'
+        args[0].favicon = 'public/favicon.ico'
+        args[0].hash = true
+        return args
+      })
+    },
 })
